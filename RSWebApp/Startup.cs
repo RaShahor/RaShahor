@@ -16,7 +16,7 @@ namespace RSWebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration)//ניסוי העלאה לגיט
         {
             Configuration = configuration;
         }
