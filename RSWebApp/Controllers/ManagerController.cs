@@ -47,10 +47,10 @@ namespace RSWebApp.Controllers
         }
 
         [HttpGet("{idu}/{ids}/FormTS")]
-        public async Task<List<FormToSigner>> GetTmp(int idu,int ids)
+        public async Task<List<FormToSigner>> GetTmp(int idu, int ids)
         {
 
-            return await MDL.getAllFormsToSignerByUserIdAndSignerId(idu,ids);
+            return await MDL.getAllFormsToSignerByUserIdAndSignerId(idu, ids);
         }
         [HttpGet("{id}/Signer")]
         public async Task<List<Signer>> GetSigners(int id)
@@ -59,12 +59,12 @@ namespace RSWebApp.Controllers
             return await MDL.getAllSignersByUser(id);
         }
         [HttpPost]
-        public async Task PostNewSigner([FromBody]SignerDTO signerDTO)
+        public async Task PostNewSigner([FromBody] SignerDTO signerDTO)
         {
             await MBL.NewSigner(signerDTO);
         }
 
-        // PUT api/<SecretaryController>/5
+        //PUT api/<SecretaryController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
