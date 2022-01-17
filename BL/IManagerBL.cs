@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using DTO;
+using Entities;
 namespace BL
+
 {
     public interface IManagerBL
     {
-        Task NewSigner(SignerDTO signerDTO);
+        Task <Signer>NewSigner(SignerDTO signerDTO);
     }
 }

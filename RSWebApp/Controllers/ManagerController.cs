@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
-
+using AutoMapper;
 
 namespace RSWebApp.Controllers
 {
@@ -61,7 +61,7 @@ namespace RSWebApp.Controllers
         [HttpPost]
         public async Task PostNewSigner([FromBody]SignerDTO signerDTO)
         {
-            return await MBL.NewSigner(signerDTO);
+            await MBL.NewSigner(signerDTO);
         }
 
         // PUT api/<SecretaryController>/5

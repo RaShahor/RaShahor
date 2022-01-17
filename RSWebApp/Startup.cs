@@ -14,14 +14,16 @@ using System.Threading.Tasks;
 using BL;
 //using DL;
 using Entities;
-//using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace RSWebApp
 {
     public class Startup
     {
         ILogger<Startup> logger;
+       
         public Startup(IConfiguration configuration)//pushing trial!!! good-luck
         {
                                                     
@@ -34,7 +36,8 @@ namespace RSWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //services.AddDbContext<SignContext>(option => option.UseSqlServer
+            //("Data Source=srv2\\pupils; initial catalog=sign;Integrated Security=True;Pooling=False"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
