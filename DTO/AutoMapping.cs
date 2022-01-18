@@ -1,13 +1,12 @@
-﻿using AutoMapper;
+﻿//using AutoMapper;
 using System;
-
 namespace DTO
 {
-    public class AutoMapping:Profile
+    public class AutoMapping//:Profile
     {
         public AutoMapping()
         {
-           CreateMap<SignerDTO,SignerDTO>();     
+           //CreateMap<SignerDTO,SignerDTO>();     
         }
 
     }

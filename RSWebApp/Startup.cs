@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BL;
-//using DL;
 using Entities;
 using AutoMapper;
 using DAL;
@@ -36,14 +35,19 @@ namespace RSWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<SignContext>(option => option.UseSqlServer
-            //("Data Source=srv2\\pupils; initial catalog=sign;Integrated Security=True;Pooling=False"));
+            services.AddDbContext<SignContext>(option => option.UseSqlServer
+            ("Data Source=srv2\\pupils; initial catalog=sign;Integrated Security=True;Pooling=False"));
             services.AddControllers();
+            //services.AddTransient<IManagerDL,ManagerDL>();
+            //services.AddTransient<IManagerBL, ManagerBL>();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped(typeof(IManagerBL), typeof(ManagerBL));
+            services.AddScoped(typeof(IManagerDL), typeof(ManagerDL));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RSWebApp", Version = "v1" });
             });
-            services.AddAutoMapper(typeof(Startup));
+           
                 
 
 

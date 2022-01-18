@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+//using Microsoft.Data.SqlClient;
+
+//using Microsoft.Extensions.Logging;
 namespace DAL
 {
     public class ManagerDL : IManagerDL
@@ -69,19 +70,33 @@ namespace DAL
 
         }
 
+        public async Task<FormToSigner>  newFTS(FormToSigner fts)
+        {
+             
+            myContext.FormToSigners.AddAsync(fts);
+            FormToSigner addedSuccessfully = await myContext.FormToSigners.Where(x => x.FormId == fts.Form.UserId).LastAsync();
+            return addedSuccessfully;
+        }
+
         public async Task<Signer> newSigner(Signer signer, int Uid = 0)
         {
             //SignContext con = new SignContext();
             User u =  (User)myContext.Users.Where(u => u.Id == Uid);
-            u.Signers.Add(signer);
-
+           // myContext.Users.איך מוסיפים לתוך מסד הנתונים?
+            u.Signers.Add(signer);//
+            await myContext.Signers.AddAsync(signer);
+            await myContext.SaveChangesAsync();
             return signer;
         }
 
-        public Task<Signer> newSigner(Signer signer)
+        public async void updateStatusOfFTS(int id1, FormToSigner fts)
         {
-            throw new NotImplementedException();
+            //await myContext.FormToSigners.UpdateAsync((FormToSigner)myContext.FormToSigners.Where(x=>x.Id==id2)).;
+            myContext.FormToSigners.Update(fts);
+            await myContext.SaveChangesAsync();
         }
+
+
     }
 }
                                                           

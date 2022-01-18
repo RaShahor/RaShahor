@@ -59,16 +59,24 @@ namespace RSWebApp.Controllers
             return await MDL.getAllSignersByUser(id);
         }
         [HttpPost]
-        public async Task PostNewSigner([FromBody] SignerDTO signerDTO)
+        public async Task PostNewSigner([FromBody] SignerDTO signerDTO,int UId)
         {
-            await MBL.NewSigner(signerDTO);
+            await MBL.NewSigner(signerDTO,UId);
+        }
+        [HttpPost]
+        public async Task<FormToSigner> PostNewFormToSigner([FromBody] FormUser form,int SId, int cls,int status,int order)
+        {
+            return await MBL.newFTS(form, SId, cls, status, order);
         }
 
         //PUT api/<SecretaryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async void updateStatusOfFTS(int id, [FromBody] FormToSigner fts)
         {
+             await MBL.updateStatusOfFTS(id, fts);
         }
+
+
 
         // DELETE api/<SecretaryController>/5
         [HttpDelete("{id}")]

@@ -16,9 +16,9 @@ namespace Entities
         public int Id { get; set; }
         public int SignerId { get; set; }
         public int? FormId { get; set; }
-        public int Class { get; set; }
+        public int? Class { get; set; }
         public int? Status { get; set; }
-        public byte? Order { get; set; }
+        public int? Order { get; set; }//changed from byte to int!
         [JsonIgnore]
         public virtual FormUser Form { get; set; }
         [JsonIgnore]

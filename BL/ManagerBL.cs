@@ -10,7 +10,7 @@ using Entities;
 
 namespace BL
 {
-    class ManagerBL : IManagerBL
+    public class ManagerBL : IManagerBL
 
     {
         IManagerDL managerDL;
@@ -21,9 +21,22 @@ namespace BL
             map = mapper;
         }
 
-        public Task<Signer> NewSigner(SignerDTO signerDTO)
+       
+
+        public Task<Signer> NewSigner(SignerDTO signerDTO,int UId)
         {
-            return managerDL.newSigner(map.Map<SignerDTO, Signer>(signerDTO));
+            return managerDL.newSigner(map.Map<SignerDTO, Signer>(signerDTO),UId);
+        }
+        public async Task<FormToSigner> newFTS(FormUser form, int sId,  int cls = 1, int status = 1, int order = 1)
+        {
+            FormToSigner fts = new FormToSigner() { SignerId = sId, FormId = form.Id, Class = cls, Status = status, Order = order };
+            return await managerDL.newFTS(fts);
+        }
+
+        public async Task updateStatusOfFTS(int id, FormToSigner fts)
+        {
+            fts.Status = id;//update status
+            managerDL.updateStatusOfFTS(id, fts);
         }
     }
 }
