@@ -16,6 +16,7 @@ using Entities;
 using AutoMapper;
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace RSWebApp
 {
@@ -28,7 +29,8 @@ namespace RSWebApp
                                                     
             Configuration = configuration;
             
-            }
+
+        }
 
         public IConfiguration Configuration { get; }
 
@@ -47,8 +49,9 @@ namespace RSWebApp
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RSWebApp", Version = "v1" });
             });
-           
-                
+            services.AddResponseCaching();
+
+
 
 
         }
@@ -72,6 +75,22 @@ namespace RSWebApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseResponseCaching();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.GetTypedHeaders().CacheControl =
+                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromSeconds(10)
+                    };
+                context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+                    new string[] { "Accept-Encoding" };
+
+                await next();
+            });
+
 
             app.UseAuthorization();
 

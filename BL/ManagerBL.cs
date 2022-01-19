@@ -38,6 +38,26 @@ namespace BL
             fts.Status = id;//update status
             managerDL.updateStatusOfFTS(id, fts);
         }
+
+        public void DeleteSigner(int id)
+        {
+            managerDL.DeleteSigner(id);
+        }
+
+        public void DeleteformsToSigner_range(int id, DateTime date)
+        {
+            managerDL.DeleteformsToSigner_rangeAsync(id,date);
+        }
+
+        public void DeleteUser(int id)
+        {
+            managerDL.DeleteUser(id);
+        }
+
+        public void DeleteformsToUser_range(int id, DateTime date)
+        {
+            managerDL.DeleteformsToUser_range(id,date);
+        }
     }
 }
 

@@ -1,7 +1,7 @@
-﻿using DAL;
+﻿using Entities;
 using BL;
 using DTO;
-using Entities;
+using DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
-using AutoMapper;
+//using AutoMapper;
 
 namespace RSWebApp.Controllers
 {
@@ -20,25 +20,33 @@ namespace RSWebApp.Controllers
     { 
         IManagerDL MDL;
         IManagerBL MBL;
-        IMapper mapper1;
-        public ManagerController(IManagerDL managerDL,IManagerBL managerBL,IMapper mapper)
+       
+        public ManagerController(IManagerDL managerDL, IManagerBL managerBL)
         {
             MDL = managerDL;
             MBL = managerBL;
-            mapper1 = mapper;
+           
         }
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "server is runing!", "ב,ה סוף סוף" };
         }
 
         [HttpGet("{id}/FormToSigner")]
         public async Task<List<FormToSigner>> Get(int id)
         {
-
-            return await MDL.getAllFormsToUserBySigner(id);
+            List<FormToSigner> trial = await MDL.getAllFormsToUserBySigner(id);
+            if (trial != null)
+                return trial;
+            throw NotFoundExeption();
         }
+
+        private Exception NotFoundExeption()
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpGet("{id}/FormTemplate")]
         public async Task<List<FormTemplate>> GetTmp(int id)
         {
@@ -58,12 +66,12 @@ namespace RSWebApp.Controllers
 
             return await MDL.getAllSignersByUser(id);
         }
-        [HttpPost]
+        [HttpPost("{uid}")]
         public async Task PostNewSigner([FromBody] SignerDTO signerDTO,int UId)
         {
             await MBL.NewSigner(signerDTO,UId);
         }
-        [HttpPost]
+        [HttpPost("{Sid}/{cls}/{status}/{order}")]
         public async Task<FormToSigner> PostNewFormToSigner([FromBody] FormUser form,int SId, int cls,int status,int order)
         {
             return await MBL.newFTS(form, SId, cls, status, order);
@@ -79,9 +87,25 @@ namespace RSWebApp.Controllers
 
 
         // DELETE api/<SecretaryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id}/Signer")]
+        public void DeleteSigner(int id)
         {
+            MBL.DeleteSigner(id);
+        }
+        [HttpDelete("{id}/User")]
+        public void DeleteUser(int id)
+        {
+            MBL.DeleteUser(id);
+        }
+        [HttpDelete("{id}/{tillDate}/formsToSigner-range")]
+        public void DeleteformsToSigner_range(int id,DateTime date)
+        {
+            MBL.DeleteformsToSigner_range(id, date);
+        }
+        [HttpDelete("{id}/{tillDate}/formsToUser-range")]
+        public void DeleteformsToUser_range(int id,DateTime date)
+        {
+            MBL.DeleteformsToUser_range(id, date);
         }
     }
 }

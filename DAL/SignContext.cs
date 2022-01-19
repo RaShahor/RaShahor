@@ -29,6 +29,8 @@ namespace DAL
         public virtual DbSet<Signer> Signers { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -285,10 +287,45 @@ namespace DAL
                     .HasForeignKey(d => d.PersonId)
                     .HasConstraintName("person_user_fk");
             });
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.ToTable("RATING");
 
-            OnModelCreatingPartial(modelBuilder);
-        }
+                entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
+
+                entity.Property(e => e.Host)
+                    .HasMaxLength(50)
+                    .HasColumnName("HOST");
+
+                entity.Property(e => e.Method)
+                    .HasMaxLength(10)
+                    .HasColumnName("METHOD")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Path)
+                    .HasMaxLength(50)
+                    .HasColumnName("PATH");
+
+                entity.Property(e => e.RecordDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Record_Date");
+
+                entity.Property(e => e.Referer)
+                    .HasMaxLength(100)
+                    .HasColumnName("REFERER");
+
+
+
+
+
+                entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
+            });
+            OnModelCreatingPartial(modelBuilder); }  
+                
+            
+             
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        
     }
 }

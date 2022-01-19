@@ -1,4 +1,5 @@
 ﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,5 +14,9 @@ namespace DAL
         Task <Signer>newSigner(Signer signer,int UId);
         Task<FormToSigner> newFTS(FormToSigner fts);
         void updateStatusOfFTS(int id1, FormToSigner fts);
+        void DeleteSigner(int id);
+        void DeleteformsToSigner_rangeAsync(int id, DateTime date);
+        void DeleteUser(int id);
+        void DeleteformsToUser_range(int id, DateTime date);
     }
 }

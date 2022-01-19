@@ -15,8 +15,8 @@ namespace Entities
         public string SavedAtFile { get; set; }
         public DateTime Date { get; set; }
         public bool? Known { get; set; }
-        [StringLength(16)]
-        [MinLength(16)]
+        [MaxLength(12)]
+        [MinLength(8)]
         public string SignedFrom { get; set; }
         [JsonIgnore]
         public virtual Class Class { get; set; }

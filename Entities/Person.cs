@@ -22,7 +22,8 @@ namespace Entities
         public string LName { get; set; }
         [EmailAddress]
         public string Mail { get; set; }
-        [StringLength(10)]
+        [MaxLength(10)]
+        [MinLength(6)]
         public string Password { get; set; }
         [JsonIgnore]
         public virtual ICollection<Signer> Signers { get; set; }

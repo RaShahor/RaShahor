@@ -13,15 +13,46 @@ namespace DAL
     public class ManagerDL : IManagerDL
     {
         SignContext myContext;
-        IManagerDL _manager;
+       
         //ILogger logger;
 
 
-        public ManagerDL(IManagerDL manager, SignContext myC)
-        {
-            _manager = manager;
+        public ManagerDL( SignContext myC)
+        { 
             myContext = myC;
+           
             //this.logger = logger;
+        }
+
+        public async Task DeleteformsToSigner_rangeAsync(int id, DateTime date)
+        {
+           Task<List<FormSigner>>removings = myContext.FormSigners.Where(x => x.Date < date).ToListAsync();
+
+            foreach (FormSigner item in removings.Result)
+            {
+                int formId = (int)item.FormTosigner.FormId;
+                myContext.FormSigners.RemoveRange(myContext.FormSigners.Include(FS => FS.FormTosigner).ThenInclude(FTS => FTS.FormId == formId));
+        }}
+
+        public void DeleteformsToUser_range(int id, DateTime date)
+        {
+            myContext.FormToSigners.RemoveRange();
+        //TODO  
+        //have to think what to do with range - add date to db or stng else!
+        }
+
+        public async void DeleteSigner(int id)
+        {
+            Signer s = (Signer)myContext.Signers.Where(x => x.Id == id);
+            myContext.Signers.Remove(s);
+            myContext.SaveChangesAsync();
+        }
+
+        public void DeleteUser(int id)
+        {
+            User u = (User)myContext.Users.Where(x => x.Id == id);
+            myContext.Users.Remove(u);
+            myContext.SaveChangesAsync();
         }
 
         public async Task<List<FormTemplate>> getAllFormsTemplatesByUser(int id)
@@ -96,7 +127,10 @@ namespace DAL
             await myContext.SaveChangesAsync();
         }
 
-
+        void IManagerDL.DeleteformsToSigner_rangeAsync(int id, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
                                                           
