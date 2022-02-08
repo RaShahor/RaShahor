@@ -25,7 +25,7 @@ namespace BL
         }
         public async void PutUser(string email, User user)
         {
-
+            user.Person.Mail = email;
             ILogIn.PutUser(email, user);
         }
     }

@@ -4,24 +4,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 namespace DAL
 {
     public class LogInDL : ILogInDL
     {
-        public Task<User> GetUser(string psw, string email)
+        SignContext myContext;
+
+        ILogger logger;
+
+
+        public LogInDL(SignContext myC)
         {
-            throw new NotImplementedException();
+            myContext = myC;
+
+            this.logger = logger;
+        }
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await myContext.Users.ToListAsync();
+        }
+        public async Task<User> PostUser(string email, string pwd) 
+        {
+           //await
+            return (User) myContext.Users.Where(x => x.Person.Mail == email && x.Person.Password == pwd);
+
         }
 
-        public Task<User> PostUser(User user)
+        public async Task<User> PostUser(User user)
         {
-            throw new NotImplementedException();
+            myContext.Users.AddAsync(user);
+            myContext.SaveChangesAsync();
+            //await?
+            return  user ;
         }
 
-        public void PutUser(string email, User user)
+        public async Task<User> PutUser( string email,User user)
         {
-            throw new NotImplementedException();
+            var userToUpdate=myContext.Users.FindAsync(user.Id);
+            if (userToUpdate == null)
+                return null;
+            myContext.Entry(userToUpdate).CurrentValues.SetValues(user);
+            await myContext.SaveChangesAsync();
+            return user;
+
         }
         /*     //public User getUser(string login, string password)
         //{

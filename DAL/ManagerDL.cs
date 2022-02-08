@@ -31,7 +31,10 @@ namespace DAL
             foreach (FormSigner item in removings.Result)
             {
                 int formId = (int)item.FormTosigner.FormId;
-                myContext.FormSigners.RemoveRange(myContext.FormSigners.Include(FS => FS.FormTosigner).ThenInclude(FTS => FTS.FormId == formId));
+                myContext.FormSigners
+                    .RemoveRange(myContext.FormSigners
+                    .Include(FS => FS.FormTosigner)
+                    .ThenInclude(FTS => FTS.FormId == formId));
         }}
 
         public void DeleteformsToUser_range(int id, DateTime date)
