@@ -7,16 +7,16 @@ using Entities;
 using DAL;
 namespace BL
 {
-    class LogInBL
+    public class LogInBL:IlogInBL
     {
         ILogInDL ILogIn;
         public LogInBL(ILogInDL iLogIn)
         {
             this.ILogIn = iLogIn;
         }
-        public async Task<User> GetUser(string psw, string email)
+        public async Task<User> PostUser(string psw, string email)
         {
-            return await ILogIn.GetUser(psw, email);
+            return await ILogIn.PostUser(psw, email);
         }
         public async Task<User> PostUser(User user)
         {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 //using Microsoft.Data.SqlClient;
 
 //using Microsoft.Extensions.Logging;
@@ -14,14 +15,14 @@ namespace DAL
     {
         SignContext myContext;
        
-        //ILogger logger;
+        ILogger logger;
 
 
         public ManagerDL( SignContext myC)
         { 
             myContext = myC;
            
-            //this.logger = logger;
+            this.logger = logger;
         }
 
         public async Task DeleteformsToSigner_rangeAsync(int id, DateTime date)

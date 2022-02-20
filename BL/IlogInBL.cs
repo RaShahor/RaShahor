@@ -1,6 +1,6 @@
-﻿namespace RSWebApp.Controllers
+﻿namespace BL
 {
-    public class IlogInBL
+    public interface IlogInBL
     {
     }
 }
