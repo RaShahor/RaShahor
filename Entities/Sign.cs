@@ -9,7 +9,7 @@ namespace Entities {
     {
         public int Id { get; set; }
         public int FormId { get; set; }
-        public short? PageNum { get; set; }
+        public short?  PageNum { get; set; }
         public int X1 { get; set; }
         public int X2 { get; set; }
         public int Y1 { get; set; }

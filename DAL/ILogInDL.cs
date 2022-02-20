@@ -6,9 +6,9 @@ namespace DAL
 {
     public interface ILogInDL
     {
-        Task<List<User>> GetAllUsers();
-        Task<User> PostUser(string email, string pwd);
-        Task<User> PostUser(User user);
-        void PutUser(string email, User user);
+        Task<List<User>> GetAllUsers();//למנהל - כל המשתמשים
+        Task<User> PostUser(string email, string pwd);//כניסה - לקוח קיים
+        Task<User> PostUser(User user);//משתמש חדש
+        Task<User> PutUser(string email, User user);//עדכון מייל
     }
 }

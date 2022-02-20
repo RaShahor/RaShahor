@@ -11,12 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BL;
-using Entities;
 using AutoMapper;
-using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+
+using Entities;
+using DAL;
+using BL;
+
 
 namespace RSWebApp
 {
@@ -43,8 +45,12 @@ namespace RSWebApp
             //services.AddTransient<IManagerDL,ManagerDL>();
             //services.AddTransient<IManagerBL, ManagerBL>();
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped(typeof(IManagerBL), typeof(ManagerBL));
-            services.AddScoped(typeof(IManagerDL), typeof(ManagerDL));
+            services.AddScoped<IManagerBL,ManagerBL>();
+            services.AddScoped<IManagerDL, ManagerDL>();
+            services.AddScoped<IlogInBL, LogInBL>();
+            services.AddScoped<ILogInDL, LogInDL>();
+            services.AddScoped<IAIBL,AIBL>();
+            services.AddScoped<IAIDL,AIDL>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RSWebApp", Version = "v1" });

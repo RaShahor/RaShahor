@@ -7,16 +7,22 @@ using Entities;
 using DAL;
 namespace BL
 {
-    class LogInBL
+    public class LogInBL:IlogInBL
     {
         ILogInDL ILogIn;
-        public LogInBL(ILogInDL iLogIn)
+        public  LogInBL(ILogInDL iLogIn)
         {
             this.ILogIn = iLogIn;
         }
-        public async Task<User> GetUser(string psw, string email)
+
+        public async Task<List<User>> GetUser(string mail, string password)
         {
-            return await ILogIn.GetUser(psw, email);
+            return await ILogIn.GetAllUsers();
+        }
+
+        public async Task<User> PostUser(string psw, string email)
+        {
+            return await ILogIn.PostUser(psw, email);
         }
         public async Task<User> PostUser(User user)
         {
@@ -27,6 +33,11 @@ namespace BL
         {
             user.Person.Mail = email;
             ILogIn.PutUser(email, user);
+        }
+
+        Task<List<User> >IlogInBL.GetUser(string mail, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

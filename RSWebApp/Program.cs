@@ -13,8 +13,13 @@ namespace RSWebApp
     public class Program
     {
         public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
+        {//try
+        //    {  }
+        //    catch(Exception ex)
+        //    {
+        //        Console.Write(ex.HelpLink );
+        //    }
+         CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,6 +27,6 @@ namespace RSWebApp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseNLog();
+                });
     }
 }

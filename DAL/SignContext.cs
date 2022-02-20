@@ -320,12 +320,13 @@ namespace DAL
 
                 entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
             });
-            OnModelCreatingPartial(modelBuilder); }  
-                
-            
-             
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-        
+
     }
 }
