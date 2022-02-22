@@ -33,43 +33,43 @@ namespace RSWebApp.Controllers
         //            return aiBL.GetAllSignsFromAIModel(pdf);
         //        }
 
-        //        // GET api/<AI>/5
-        //        //[HttpGet("{name/Uid}")]
-        //        //public async Task<FormTemplate> Get(string name,int id)
-        //        //{
-        //        //    return (FormTemplate)aiBL.getFT(name,id);
+        //// GET api/<AI>/5
+        //[HttpGet("{name/Uid}")]
+        //public async Task<FormTemplate> Get(string name,int id)
+        //{
+        //    return (FormTemplate)aiBL.getFT(name,id);
+                
+        //}
 
-        //        //}
+        //// POST api/<AI>
+        //[HttpPost("{id}")]
+        //public async Task<Sign> PostAddSign([FromBody] Sign sign,int uId)
+        //{
+        //    return aiBL.AddSign(sign,uId);
+        //}
+        //[HttpPost("{id}")]
+        //public async Task<Sign> PostAddFormTemplate([FromBody] FormTemplate ft, int uId)
+        //{
+        //    return aiBL.AddFT(ft, uId);
+        //}
+        //[HttpPost("{id}")]
+        //public async Task<Sign> PostAddForm([FromBody] FormUserDTO formDto, int uId)
+        //{
+        //    return aiBL.AddForm(formDto, uId);
+        //}
 
-        //        // POST api/<AI>
-        //        [HttpPost("{id}")]
-        //        public async Task<Sign> PostAddSign([FromBody] Sign sign,int uId)
-        //        {
-        //            return aiBL.AddSign(sign,uId);
-        //        }
-        //        [HttpPost("{id}")]
-        //        public async Task<Sign> PostAddFormTemplate([FromBody] FormTemplate ft, int uId)
-        //        {
-        //            return aiBL.AddFT(ft, uId);
-        //        }
-        //        [HttpPost("{id}")]
-        //        public async Task<Sign> PostAddForm([FromBody] FormUserDTO formDto, int uId)
-        //        {
-        //            return aiBL.AddForm(formDto, uId);
-        //        }
+        //// PUT api/<AI>/5
+        //[HttpPut("{id}")]
+        //public void PutUpdateSign(int id, [FromBody] Sign sign, [FromBody] Sign newSign)
+        //{
+        //    aiBL.updateSign(sign,id,newSign);
+        //}
 
-        //        // PUT api/<AI>/5
-        //        //[HttpPut("{id}")]
-        //        //public void PutUpdateSign(int id, [FromBody] Sign sign, [FromBody] Sign newSign)
-        //        //{
-        //        //    aiBL.updateSign(sign,id,newSign);
-        //        //}
-
-        //        // DELETE api/<AI>/5
-        //        [HttpDelete("{id}")]
-        //        public void DeleteSign(int id)
-        //        {
-        //            aiBL.deleteSign( id);
-        //        }
+        //// DELETE api/<AI>/5
+        //[HttpDelete("{id}")]
+        //public void DeleteSign(int id)
+        //{
+        //    aiBL.deleteSign( id);
+        //}
     }
 }

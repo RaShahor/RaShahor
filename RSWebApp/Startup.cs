@@ -46,11 +46,13 @@ namespace RSWebApp
             //services.AddTransient<IManagerBL, ManagerBL>();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IManagerBL,ManagerBL>();
-            services.AddScoped<IManagerDL, ManagerDL>();
-            services.AddScoped<IlogInBL, LogInBL>();
-            services.AddScoped<ILogInDL, LogInDL>();
-            services.AddScoped<IAIBL,AIBL>();
-            services.AddScoped<IAIDL,AIDL>();
+            services.AddScoped<IManagerDL,ManagerDL>();
+            services.AddScoped<IlogInBL,LogInBL>();
+            services.AddScoped<ILogInDL,LogInDL>();
+            services.AddScoped<IAIBL, AIBL>();
+            services.AddScoped<IAIDL, AIDL>();
+            services.AddScoped<ISignerBl,SignerBl>();
+            services.AddScoped<ISignerDl, SignerDl>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RSWebApp", Version = "v1" });

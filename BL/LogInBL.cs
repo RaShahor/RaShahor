@@ -14,12 +14,6 @@ namespace BL
         {
             this.ILogIn = iLogIn;
         }
-
-        public async Task<List<User>> GetUser(string mail, string password)
-        {
-            return await ILogIn.GetAllUsers();
-        }
-
         public async Task<User> PostUser(string psw, string email)
         {
             return await ILogIn.PostUser(psw, email);

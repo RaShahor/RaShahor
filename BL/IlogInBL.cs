@@ -6,6 +6,5 @@ namespace BL
 {
     public interface IlogInBL
     {
-        Task<List<User>> GetUser(string mail, string password);
     }
 }

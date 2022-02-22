@@ -13,11 +13,12 @@ namespace RSWebApp
     public class Program
     {
         public static void Main(string[] args)
-        {//try
+        {
+        //try
         //    {  }
         //    catch(Exception ex)
         //    {
-        //        Console.Write(ex.HelpLink );
+        //        Console.Write(ex.HelpLink);
         //    }
          CreateHostBuilder(args).Build().Run();
         }
