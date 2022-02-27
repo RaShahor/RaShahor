@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using BL;
+using Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,40 +21,40 @@ namespace RSWebApp.Controllers
             this.logBL = logBL;
         }
         // GET: api/<SecretaryController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
+
+        // GET api/<SecretaryController>/5
+        [HttpPost("{mail}/{password}")]
+
+        public async Task<ActionResult<User>> Get(string mail, string password)
         {
-            return new string[] { "value1", "value2" };
+
+            User u = await logBL.postUser(mail, password);
+            if (u == null)
+                return NoContent();
+            else return u;
         }
 
-        //// GET api/<SecretaryController>/5
-        //[HttpGet("{mail}/{password}")]
 
-        //public async Task<ActionResult<User>> Get(string mail, string password)
-        //{
+        // POST: HomeController/Edit/5
+        [HttpPost]
+        // [ValidateAntiForgeryToken]
+        public async Task<User> Post([FromBody] User user)
+        {
+            return await logBL.postUser(user);
+        }
 
-        //    User u = await logBL.GetUser(mail,password);
-        //    if (u == null)
-        //        return NoContent();
-        //    else return u;
-        //}
+        [HttpPut("{mail}")]
+        public async Task Put(string mail, [FromBody] User curUser)
+        {
 
+            logBL.putUser(mail, curUser);
 
-        //// POST: HomeController/Edit/5
-        //[HttpPost]
-        //// [ValidateAntiForgeryToken]
-        //public async Task<User> Post([FromBody] User user)
-        //{
-        //    return await logBL.PostUser(user);
-        //}
-
-        //[HttpPut("{mail}")]
-        //public async void Put(string mail, [FromBody] User curUser)
-        //{
-
-        //    logBL.PutUser(mail, curUser);
-
-        //}
+        }
 
 
         //// DELETE api/<SecretaryController>/5

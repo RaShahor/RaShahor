@@ -1,9 +1,7 @@
 ﻿using System;
-using Entities;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using Entities;
 #nullable disable
 
 namespace DAL
@@ -24,20 +22,20 @@ namespace DAL
         public virtual DbSet<FormTemplate> FormTemplates { get; set; }
         public virtual DbSet<FormToSigner> FormToSigners { get; set; }
         public virtual DbSet<FormUser> FormUsers { get; set; }
+        public virtual DbSet<Modify> Modifies { get; set; }
         public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Sign> Signs { get; set; }
         public virtual DbSet<Signer> Signers { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Rating> Ratings { get; set; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=srv2\\pupils;Database=Sign;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=srv2\\PUPILS;Database=Sign;Trusted_Connection=True;");
             }
         }
 
@@ -174,9 +172,24 @@ namespace DAL
                     .HasConstraintName("Userfu_fk");
             });
 
+            modelBuilder.Entity<Modify>(entity =>
+            {
+                entity.HasKey(e => e.Level);
+
+                entity.Property(e => e.Level).HasColumnName("level");
+
+                entity.Property(e => e.Details)
+                    .HasMaxLength(10)
+                    .HasColumnName("details")
+                    .IsFixedLength(true);
+            });
+
             modelBuilder.Entity<Person>(entity =>
             {
                 entity.ToTable("Person");
+
+                entity.HasIndex(e => e.Mail, "unique mail")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -201,6 +214,41 @@ namespace DAL
                     .IsRequired()
                     .HasMaxLength(10)
                     .HasColumnName("password");
+
+                entity.Property(e => e.Salt)
+                    .HasMaxLength(20)
+                    .HasColumnName("salt")
+                    .IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.ToTable("RATING");
+
+                entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
+
+                entity.Property(e => e.Host)
+                    .HasMaxLength(50)
+                    .HasColumnName("HOST");
+
+                entity.Property(e => e.Method)
+                    .HasMaxLength(10)
+                    .HasColumnName("METHOD")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Path)
+                    .HasMaxLength(50)
+                    .HasColumnName("PATH");
+
+                entity.Property(e => e.RecordDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Record_Date");
+
+                entity.Property(e => e.Referer)
+                    .HasMaxLength(100)
+                    .HasColumnName("REFERER");
+
+                entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
             });
 
             modelBuilder.Entity<Sign>(entity =>
@@ -244,12 +292,6 @@ namespace DAL
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.Signers)
-                    .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("personSigner_fk");
-
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Signers)
                     .HasForeignKey(d => d.UserId)
@@ -281,52 +323,11 @@ namespace DAL
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.PersonId).HasColumnName("person_id");
-
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.PersonId)
-                    .HasConstraintName("person_user_fk");
             });
-            modelBuilder.Entity<Rating>(entity =>
-            {
-                entity.ToTable("RATING");
 
-                entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
-
-                entity.Property(e => e.Host)
-                    .HasMaxLength(50)
-                    .HasColumnName("HOST");
-
-                entity.Property(e => e.Method)
-                    .HasMaxLength(10)
-                    .HasColumnName("METHOD")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Path)
-                    .HasMaxLength(50)
-                    .HasColumnName("PATH");
-
-                entity.Property(e => e.RecordDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("Record_Date");
-
-                entity.Property(e => e.Referer)
-                    .HasMaxLength(100)
-                    .HasColumnName("REFERER");
-
-
-
-
-
-                entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
-            });
             OnModelCreatingPartial(modelBuilder);
         }
 
-
-
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
     }
 }

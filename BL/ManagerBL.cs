@@ -23,9 +23,9 @@ namespace BL
 
        
 
-        public Task<Signer> NewSigner(SignerDTO signerDTO,int UId)
+        public Task<Signer> NewSigner(Signer signerDTO,int UId)
         {
-            return managerDL.newSigner(map.Map<SignerDTO, Signer>(signerDTO),UId);
+            return managerDL.newSigner(signerDTO,UId);
         }
         public async Task<FormToSigner> newFTS(FormUser form, int sId,  int cls = 1, int status = 1, int order = 1)
         {
@@ -39,22 +39,22 @@ namespace BL
             managerDL.updateStatusOfFTS(id, fts);
         }
 
-        public void DeleteSigner(int id)
+        public async Task DeleteSigner(int id)
         {
-            managerDL.DeleteSigner(id);
+             await managerDL.DeleteSigner(id);
         }
 
-        public void DeleteformsToSigner_range(int id, DateTime date)
+        public async Task DeleteformsToSigner_range(int id, DateTime date)
         {
             managerDL.DeleteformsToSigner_rangeAsync(id,date);
         }
 
-        public void DeleteUser(int id)
+        public async Task DeleteUser(int id)
         {
             managerDL.DeleteUser(id);
         }
 
-        public void DeleteformsToUser_range(int id, DateTime date)
+        public async Task DeleteformsToUser_range(int id, DateTime date)
         {
             managerDL.DeleteformsToUser_range(id,date);
         }

@@ -1,6 +1,9 @@
-﻿#nullable disable
+﻿using System;
+using System.Collections.Generic;
 
-namespace Entities
+#nullable disable
+
+namespace RSWebApp.Models
 {
     public partial class Status
     {

@@ -38,34 +38,37 @@ namespace DAL
                     .ThenInclude(FTS => FTS.FormId == formId));
         }}
 
-        public void DeleteformsToUser_range(int id, DateTime date)
+        public async Task DeleteformsToUser_range(int id, DateTime date)
         {
             myContext.FormToSigners.RemoveRange();
         //TODO  
         //have to think what to do with range - add date to db or stng else!
         }
-
-        public async void DeleteSigner(int id)
+        
+        public async Task DeleteSigner(int id)
         {
-            Signer s = (Signer)myContext.Signers.Where(x => x.Id == id);
+            Signer s = await myContext.Signers.FindAsync(id);
+            //Error = Cannot evaluate expression because a thread is stopped at a point where garbage collection is impossible, possibly because the code is optimized.
+            if(s!=null)
             myContext.Signers.Remove(s);
-            myContext.SaveChangesAsync();
+            myContext.SaveChanges();
         }
 
-        public void DeleteUser(int id)
+        public async Task DeleteUser(int id)
         {
             User u = (User)myContext.Users.Where(x => x.Id == id);
             myContext.Users.Remove(u);
             myContext.SaveChangesAsync();
         }
-
+        //Error://(Convert(f, FormUser).UserId == __id_0)' is invalid inside an 'Include' operation, since it does not represent a property access: 
+        //'t => t.MyProperty'. To target navigations declared on derived types, use casting ('t => ((Derived)t).MyProperty')
         public async Task<List<FormTemplate>> getAllFormsTemplatesByUser(int id)
         {
 
 
             var FT = await myContext.FormTemplates
-                    .Include(x => x.FormUsers)
-                    .ThenInclude(f => f.UserId == id)
+                    .Where(x => x.FormUserId==id)
+                    //.ThenInclude(f => ((FormUser)f).UserId == id)
                     .ToListAsync();
 
             return FT;
@@ -75,22 +78,21 @@ namespace DAL
         public async Task<List<FormToSigner>> getAllFormsToSignerByUserIdAndSignerId(int idu, int ids)
         {
 
-            var UTS = myContext.FormToSigners
-                    .Include(x => x.Form)
-                    .ThenInclude(f => f.UserId == idu)
-                    .Include(x => x.SignerId == ids)
-                    .ToList();
+             List < FormToSigner > UTS =await myContext.FormToSigners
+                    .Where(x => (int)x.Form.UserId==idu&& (int)x.SignerId==ids)
+                    
+                    .ToListAsync();
             return UTS;
 
         }
-
+        //Error://(f.UserId == __us_0)' is invalid inside an 'Include' operation, since it does not represent a property access:
+        // 't => t.MyProperty'. To target navigations declared on derived types, use casting ('t => ((Derived)t).MyProperty')
         public async Task<List<FormToSigner>> getAllFormsToUserBySigner(int us)
         {
 
-            var FTS = myContext.FormToSigners
-                    .Include(x => x.Form)
-                    .ThenInclude(f => f.UserId == us)
-                    .ToList();
+            List<FormToSigner> FTS =await myContext.FormToSigners
+                    .Where(x => (x).Form.UserId == us)
+                    .ToListAsync();
             return FTS;
 
         }
@@ -113,7 +115,7 @@ namespace DAL
             return addedSuccessfully;
         }
 
-        public async Task<Signer> newSigner(Signer signer, int Uid = 0)
+        public async Task<Signer> newSigner(Signer signer, int Uid = 1)
         {
             //SignContext con = new SignContext();
             User u =  (User)myContext.Users.Where(u => u.Id == Uid);
@@ -131,7 +133,7 @@ namespace DAL
             await myContext.SaveChangesAsync();
         }
 
-        void IManagerDL.DeleteformsToSigner_rangeAsync(int id, DateTime date)
+         async Task IManagerDL.DeleteformsToSigner_rangeAsync(int id, DateTime date)
         {
             throw new NotImplementedException();
         }

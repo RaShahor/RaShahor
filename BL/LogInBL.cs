@@ -14,24 +14,32 @@ namespace BL
         {
             this.ILogIn = iLogIn;
         }
-        public async Task<User> PostUser(string psw, string email)
+        public async Task<User> postUser(string psw, string email)
         {
             return await ILogIn.PostUser(psw, email);
         }
-        public async Task<User> PostUser(User user)
+      
+
+        public async Task<User> postUser(User user)
         {
-            
             return await ILogIn.PostUser(user);
         }
+
         public async void PutUser(string email, User user)
         {
             user.Person.Mail = email;
             ILogIn.PutUser(email, user);
         }
 
-        Task<List<User> >IlogInBL.GetUser(string mail, string password)
+        public async Task putUser(string mail, User curUser)
         {
-            throw new NotImplementedException();
+            //curUser.Person.Mail = mail;
+            await ILogIn.PutUser(mail, curUser);
         }
+
+        //Task<List<User> >IlogInBL.GetUser(string mail, string password)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

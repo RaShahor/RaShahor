@@ -27,26 +27,33 @@ namespace DAL
         }
         public async Task<User> PostUser(string email, string pwd) 
         {
-           //await
-            return (User) myContext.Users.Where(x => x.Person.Mail == email && x.Person.Password == pwd);
+           User p=(User) await  myContext.Users.Where(x=>x.Person.Mail==email&&x.Person.Password==pwd).FirstAsync();
+            return p;
 
         }
 
         public async Task<User> PostUser(User user)
         {
-            myContext.Users.AddAsync(user);
-            myContext.SaveChangesAsync();
+            await myContext.People.AddAsync(user.Person);
+            await myContext.Users.AddAsync(user);
+            await myContext.SaveChangesAsync();
             //await?
-            return  user ;
+            return   user;
         }
 
         public async Task<User> PutUser( string email,User user)
         {
-            var userToUpdate=myContext.Users.FindAsync(user.Id);
-            if (userToUpdate == null)
-                return null;
-            myContext.Entry(userToUpdate).CurrentValues.SetValues(user);
+            var userToUpdate=await myContext.People.Where(x=>x.Mail==user.Person.Mail&&x.Password==user.Person.Password).FirstOrDefaultAsync();
+            await myContext.Users.AddAsync(user);
             await myContext.SaveChangesAsync();
+            if (userToUpdate == null) 
+                return null;
+            user.Person.Mail = email;
+            string Mail = email;
+            myContext.Entry(userToUpdate).CurrentValues.SetValues(Mail);
+            
+           
+            
             return user;
 
         }

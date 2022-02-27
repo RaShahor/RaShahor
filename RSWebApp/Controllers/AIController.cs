@@ -16,30 +16,30 @@ namespace RSWebApp.Controllers
     [ApiController]
     public class AIController : ControllerBase
     {
-        //        IAIBL aiBL;
-        //        public AIController(IAIBL aIBL)
-        //        {
-        //            this.aiBL = aIBL;
-        //        }
+        IAIBL aiBL;
+        public AIController(IAIBL aIBL)
+        {
+            this.aiBL = aIBL;
+        }
         //        // GET: api/<AI>
         //        [HttpGet]
         //        public IEnumerable<string> Get()
         //        {
         //            return new string[] { "value1", "value2" };
         //        }
-        //        [HttpPost]
-        //        public Task<List<Sign>> GetAllSignsFromAIModel([FromBody]Page pdf )
-        //        {
-        //            return aiBL.GetAllSignsFromAIModel(pdf);
-        //        }
-
-        //// GET api/<AI>/5
-        //[HttpGet("{name/Uid}")]
-        //public async Task<FormTemplate> Get(string name,int id)
+        //[HttpPost]
+        //public Task<List<Sign>> GetAllSignsFromAIModel([FromBody] Page pdf)
         //{
-        //    return (FormTemplate)aiBL.getFT(name,id);
-                
+        //    return aiBL.GetAllSignsFromAIModel(pdf);
         //}
+
+        // GET api/<AI>/5
+        [HttpGet("{name}/{Uid}")]
+        public async Task<FormTemplate> Get(string name, int id)
+        {
+            return (FormTemplate)aiBL.getFT(name, id);
+
+        }
 
         //// POST api/<AI>
         //[HttpPost("{id}")]
